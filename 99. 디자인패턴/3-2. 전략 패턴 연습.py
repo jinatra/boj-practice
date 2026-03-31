@@ -1,22 +1,21 @@
-# 전략패턴: 한 기능에 대해서 여러 방법(전략)이 가능할때 사용 (캡슐화된 알고리즘)
+# 전략패턴: 하나의ㅡ 기능에 대해 여러 전략을 만들어두고, 필요한걸 사용할 수 있도록
 
-# 여러 결제 방법
-class CashPayment:
+# 여러 전략
+class Cashpayment:
     def pay(self, amount):
-        print(f'현금결제로 {amount}원 사용')
+        print(f'{amount}원만큼 현금 결제')
 
-class CardPayment:
+class Cardpayment:
     def pay(self, amount):
-        print(f'카드결제로 {amount}원 사용')
+        print(f'{amount}원만큼 카드 결제')
 
-# 실제 전략패턴이 구현되는곳
+# 전략패턴
 class PaymentService:
-    # 객체에 초기값 할당될때 어떤 전략이 할당될지 선택
     def __init__(self, strategy):
-        self.strategy = strategy
+        self.strategy = strategy # 전략을 직접 전달받음
     
     def checkout(self, amount):
-        self.strategy.pay(amount)
+        return self.strategy.pay(amount)
 
-service = PaymentService(CardPayment())
-service.checkout(10000)
+cash_service = PaymentService(Cashpayment())
+cash_service.checkout(100000)
