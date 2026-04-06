@@ -12,7 +12,7 @@ class KakaoPayment:
 # --- 컨텍스트 (전략을 갈아끼우는 곳) ---
 class PaymentService:
     def __init__(self, strategy):
-        self.strategy = strategy  # 어떤 전략을 쓸지 받아둠
+        self.strategy = strategy  # 메모리에 할당된 객체에 전달받은 strategy를 초기값으로 세팅
 
     def checkout(self, amount):
         self.strategy.pay(amount)  # 받아둔 전략으로 결제 실행
