@@ -1,22 +1,21 @@
 # 프록시 패턴
-# 객체에 접근하기 전 가로채서 검증 등을 진행하는 패턴
+# 실제 서버로 들어가기 전에 요청을 가로채 필요한 작업을 수행
 
-# 실제 서버
 class Server:
-    def handle_request(self, ip):
-        print(f'{ip}에서 온 요청 처리')
+    def receive_request(self, ip):
+        print(f'{ip} 요청 수신 완료')
 
-# 프록시 서버
 class ProxyServer:
+    # 객체가 할당된 메모리의 초기값 세팅
     def __init__(self):
-        self.server = Server
+        self.server = Server()
         self.blocked_ips = ['666.666.666']
     
     def check_request(self, ip):
         if ip in self.blocked_ips:
-            print(f'{ip}는 블록 IP라 접근 차단')
+            print(f'{ip} 요청 차단')
             return
-        self.server.handle_request(ip)
+        self.server.receive_request(ip)
 
-p = ProxyServer()
-p.check_request('666.666.666')
+proxy = ProxyServer()
+proxy.check_request('666.666.666')
