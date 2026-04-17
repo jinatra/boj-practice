@@ -1,19 +1,18 @@
-# 팩토리패턴
-# 객체 생성 책임을 하나의 클래스(팩토리)에 일임하여 클라이언트에서 각 객체별 생성 로직을 알지 않아도 되게 (팩토리 하나만 있으면 객체생성 할 수 있도록)
+# 팩토리 패턴
+# 객체 생성 책임을 하나의 클래스에 일임하도록 하여 클라이언트에서 객체생성할 때 각 클래스별 객체 생성 로직을 모두 알지 않아도 되게
 
 from abc import ABC, abstractmethod
 
-# 추상클래스
-# 추상 -> 세부사항을 숨기고 뭘 할 수 있는지만 정의
-# 객체들이 같은 메서드를 가진다는 것을 보장하기 위해 사용
-# 추상클래스임을 명시하기 위해 ABC 설정
+# 추상 클래스
+# ABC를 주입하여 추상클래스임을 알게함
 class Animal(ABC):
-    # 추상메서드를 설정하여 Animal 클래스를 상속받는 객체들은 speak 함수가 있도록 강제
+    # abstractmethod를 선언하여 Animal을 상속받는 모든 클래스들은 speak 함수를 정의해야함
     @abstractmethod
     def speak(self):
         pass
 
-# 구체클래스
+# 구체 클래스
+# 실제로 객체 생성에 사용될 실물 클래스들
 class Dog(Animal):
     def speak(self):
         print('walf')
@@ -24,8 +23,8 @@ class Cat(Animal):
 
 # 팩토리 클래스
 class AnimalFactory:
-    # 객체 생성 함수 설정
-    def create_animal(self, type:str) -> Animal:
+    # 객체 생성 함수
+    def create_animal(self, type):
         if type == 'dog':
             return Dog()
         elif type == 'cat':
@@ -34,6 +33,6 @@ class AnimalFactory:
             raise ValueError()
 
 # 테스트
-factory = AnimalFactory()
-my_cat = factory.create_animal('cat')
-my_cat.speak()
+ftry = AnimalFactory()
+my_dog = ftry.create_animal('dog') # 이제 객체 생성할때는 ftry 하나만 있어도 되므로 편함
+my_dog.speak() # Animal 상속 클래스들은 모두 speak 함수가 있다는걸 알고있으므로 바로 쓸 수 있다

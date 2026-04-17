@@ -1,20 +1,24 @@
 # 프록시 패턴
-# 실제 서버에 접근하기 전 요청 등을 가로채서 지정된 작업(해킹 의심 등)을 실행
+# 서버로 요청이 넘어가기 전 가로채서 필요한 작업(해킹의심 등)을 수행
 
+# 실제 서버
 class Server:
-    def response_request(self, ip):
-        print(f'{ip}의 요청을 처리')
+    def handle_request(self, ip):
+        print(f'{ip}로부터 들어온 요청 수행')
 
+# 프록시 서버
 class ProxyServer:
     def __init__(self):
-        self.server = Server() # 속성으로 실제로 요청 들어갈 서버 할당
-        self.blocked_ips = ['666.666.666'] # 속성으로 차단 IP 설정
+        self.server = Server() #서버 정보를 들고있음
+        self.blocked_ips = ['666.666.666', '999.999.999']
     
-    def check_request(self, ip):
+    def handle_request(self, ip):
         if ip in self.blocked_ips:
-            print(f'{ip}는 블록 IP라 요청 차단')
+            print(f'{ip}로부터 들어온 요청 차단')
             return
-        self.server.response_request(ip)
+        self.server.handle_request(ip)
 
+# 테스트
 proxy = ProxyServer()
-proxy.check_request('666.666.666')
+proxy.handle_request('666.666.666')
+proxy.handle_request('111.111.111')
